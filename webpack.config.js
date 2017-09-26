@@ -11,6 +11,11 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json', 'scss']
   },
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    compress: true,
+    port: 3000
+  },
   module: {
     rules: [
       {
@@ -37,7 +42,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
-        use: "source-map-loader"
+        use: 'source-map-loader'
       }
     ]
   },

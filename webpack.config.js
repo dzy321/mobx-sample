@@ -3,8 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const tsImportPluginFactory = require('ts-import-plugin')
 
-const pkgPath = path.join(process.cwd(), 'package.json')
-const pkg = fs.existsSync(pkgPath) ? require(pkgPath) : {}
+const pkg = require('./package.json')
 
 module.exports = {
   entry: './app/index.tsx',
@@ -44,14 +43,19 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true,
-              localIdentName: '[name]_[local]-[hash:base64:5]'
+              sourceMap: true
             }
           },
-          'postcss-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
           {
             loader: 'less-loader',
             options: {
@@ -71,7 +75,10 @@ module.exports = {
         options: {
           transpileOnly: true,
           getCustomTransformers: () => ({
-            before: [tsImportPluginFactory({ libraryName: "antd", style: "css" })]
+            before: [tsImportPluginFactory({
+              libraryName: 'antd',
+              style: true
+            })]
           })
         },
         exclude: /node_modules/

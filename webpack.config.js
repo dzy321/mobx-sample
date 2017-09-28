@@ -1,5 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
+const fs = require('fs')
+const tsImportPluginFactory = require('ts-import-plugin')
+
+const pkgPath = path.join(process.cwd(), 'package.json')
+const pkg = fs.existsSync(pkgPath) ? require(pkgPath) : {}
 
 module.exports = {
   entry: './app/index.tsx',
@@ -19,7 +24,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(scss)$/,
+        test: /\.scss$/,
         include: [
           path.resolve(__dirname, 'app'),
         ],
@@ -28,6 +33,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              sourceMap: true,
               modules: true,
               localIdentName: '[name]_[local]-[hash:base64:5]'
             }
@@ -36,8 +42,39 @@ module.exports = {
         ]
       },
       {
-        test: /\.tsx?$/,
-        use: 'awesome-typescript-loader'
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              localIdentName: '[name]_[local]-[hash:base64:5]'
+            }
+          },
+          'postcss-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              modifyVars: pkg.theme
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
+      },
+      {
+        test: /\.(jsx|tsx|js|ts)$/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          getCustomTransformers: () => ({
+            before: [tsImportPluginFactory({ libraryName: "antd", style: "css" })]
+          })
+        },
+        exclude: /node_modules/
       },
       {
         enforce: 'pre',

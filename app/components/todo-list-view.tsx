@@ -1,3 +1,4 @@
+import { Slider } from 'antd'
 import { inject, observer } from 'mobx-react'
 import * as React from 'react'
 import TodoList from '../models/todo-list'
@@ -13,6 +14,7 @@ export default class extends React.Component<ITodoListViewProps, any> {
     const { todoList } = this.props
     return (
       <div>
+        <Slider />
         <ul>
           {
             todoList!.todos.map((todo) => {

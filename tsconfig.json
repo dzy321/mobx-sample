@@ -4,13 +4,17 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "module": "commonjs",
+    "module": "es2015",
     "target": "es5",
     "jsx": "react",
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "experimentalDecorators": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "lib": [
+      "es6",
+      "dom"
+    ]
   },
   "include": [
     "./app/**/*"

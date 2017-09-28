@@ -9,7 +9,7 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json', 'scss']
+    extensions: ['.ts', '.tsx', '.js', 'scss']
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),

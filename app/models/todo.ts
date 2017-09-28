@@ -1,11 +1,11 @@
-import { observable } from 'mobx'
+import { types } from 'mobx-state-tree'
 
-export default class {
-  public id = Math.random()
-  @observable public title = ''
-  @observable public finished = false
-
-  constructor(title: string) {
-    this.title = title
+export default types.model('todo', {
+  id: types.identifier(types.string),
+  title: types.string,
+  finished: false
+}).actions((self) => ({
+  toggle() {
+    self.finished = !self.finished
   }
-}
+}))

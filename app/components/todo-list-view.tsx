@@ -1,25 +1,26 @@
-import { observer } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import * as React from 'react'
 import TodoList from '../models/todo-list'
 import TodoView from './todo-view'
 
 interface ITodoListViewProps {
-  todoList: TodoList
+  todoList?: typeof TodoList.Type
 }
 
-@observer
-export default class extends React.Component<ITodoListViewProps, {}> {
+@inject('todoList') @observer
+export default class extends React.Component<ITodoListViewProps, any> {
   public render() {
+    const { todoList } = this.props
     return (
       <div>
         <ul>
           {
-            this.props.todoList.todos.map((todo) => {
+            todoList!.todos.map((todo) => {
               return <TodoView todo={todo} key={todo.id} />
             })
           }
         </ul>
-        Tasks left: {this.props.todoList.unfinishedTodoCount}
+        Tasks left: {todoList!.unfinishedTodoCount}
       </div>
     )
   }

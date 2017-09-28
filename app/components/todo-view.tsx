@@ -3,21 +3,20 @@ import * as React from 'react'
 import Todo from '../models/todo'
 
 interface ITodoViewProps {
-  todo: Todo
+  todo: typeof Todo.Type
 }
 
-@observer
-export default class extends React.Component<ITodoViewProps, {}> {
-  public render() {
-    const { todo } = this.props
+export default observer(
+  (props: ITodoViewProps) => {
+    const { todo } = props
     return (
       <li>
         <input
           type='checkbox'
           checked={todo.finished}
-          onClick={() => todo.finished = !todo.finished}
+          onClick={() => todo.toggle()}
         /> {todo.title}
       </li>
     )
   }
-}
+)

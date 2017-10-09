@@ -13,7 +13,7 @@ module.exports = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'scss']
+    extensions: ['.ts', '.tsx', '.js', '.scss', '.less']
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
